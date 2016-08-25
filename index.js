@@ -85,7 +85,7 @@ function getDerivedKey(callback) {
 
 	}
 
-	crypto.pbkdf2(chromePassword, SALT, ITERATIONS, KEYLENGTH, callback);
+	crypto.pbkdf2(chromePassword, SALT, ITERATIONS, KEYLENGTH, 'SHA1', callback);
 
 }
 
@@ -156,7 +156,7 @@ function convertRawToJar(cookies, uri) {
 
 		var jarCookie = request.cookie(cookie.name + '=' + cookie.value);
 		if (jarCookie) {
-			jar.setCookie(jarCookie, uri);			
+			jar.setCookie(jarCookie, uri);
 		}
 
 	});
@@ -173,7 +173,7 @@ function convertRawToSetCookieStrings(cookies) {
 	cookies.forEach(function(cookie, index) {
 
 		var out = '';
-		
+
 		var dateExpires = new Date(convertChromiumTimestampToUnix(cookie.expires_utc) * 1000);
 
 		out += cookie.name + '=' + cookie.value + '; ';
@@ -342,9 +342,9 @@ var getCookies = function (uri, format, callback) {
 
 				db.close(function(err) {
 					if (!err) {
-						dbClosed = true;						
+						dbClosed = true;
 					}
-					return callback(null, output);					
+					return callback(null, output);
 				});
 
 			});
